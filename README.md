@@ -69,10 +69,6 @@ Feita por Thomaz Juliann Boncompagni
    http://localhost
    ```
 
-## Contribuição
-
-Fique à vontade para contribuir com melhorias para esta aplicação! Sinta-se à vontade para abrir problemas ou enviar solicitações pull.
-
 ## Licença
 
 Este projeto está licenciado sob a [Licença MIT](LICENSE).
