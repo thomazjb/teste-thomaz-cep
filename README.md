@@ -46,7 +46,7 @@ Feita por Thomaz Juliann Boncompagni
 5. Entre no terminal da aplicação 
 
    ```
-   docker-compose exec -it teste-thomaz-cep bash
+   docker exec -it teste-thomaz-cep bash
    ```
    
 6. Configure os direitos de acesso do storage do laravel para o usuário atual:
