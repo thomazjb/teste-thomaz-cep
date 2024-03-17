@@ -25,69 +25,74 @@ Feita por Thomaz Juliann Boncompagni
    git clone https://github.com/thomazjb/teste-thomaz-cep.git
    ```
 
-2. Faça o build da aplicação:
+2. entre no repositório:
+
+   ```
+   cd teste-thomaz-cep
+   ```
+
+3. Faça o build da aplicação:
 
    ```
    docker-compose build --no-cache
    ```
 
-3. Levante o conteiner da aplicação:
+4. Levante o conteiner da aplicação:
 
    ```
    docker-compose up -d
    ```
    
-4. Entre no terminal da aplicação 
+5. Entre no terminal da aplicação 
 
    ```
    docker-compose exec -it teste-thomaz-cep bash
    ```
    
-5. Configure os direitos de acesso do storage do laravel para o usuário atual:
+6. Configure os direitos de acesso do storage do laravel para o usuário atual:
 
    ```
    chown -R www-data:www-data storage
    ```
 
-6. Instale as dependências PHP com o Composer:
+7. Instale as dependências PHP com o Composer:
 
    ```
    composer install
    ```
-7. Execute as migrações do banco de dados para criar as tabelas necessárias:
+8. Execute as migrações do banco de dados para criar as tabelas necessárias:
 
    ```
    php artisan migrate
    ```
    
-8. Copie o arquivo de ambiente de exemplo:
+9. Copie o arquivo de ambiente de exemplo:
 
    ```
    cp .env.example .env
    ```
 
-9. Configure seu ambiente no arquivo `.env`, especialmente as configurações do banco de dados PostgreSQL 
+10. Configure seu ambiente no arquivo `.env`, especialmente as configurações do banco de dados PostgreSQL 
 
-9. Saia do conteiner
+11. Saia do conteiner
 
    ```
    exit
    ```
 
-6. Instale as dependências JavaScript com o npm ou yarn (para isso é necessário ter o npm instalado préviamente na máquina):
+12. Instale as dependências JavaScript com o npm ou yarn (para isso é necessário ter o npm instalado préviamente na máquina):
 
    ```
    npm install
    ```
 
-7. Compile os ativos do Vue.js:
+13. Compile os ativos do Vue.js:
 
    ```
    npm run dev
    ```
 
-
-9. Acesse a aplicação em seu navegador:
+14. Acesse a aplicação em seu navegador:
 
    ```
    http://localhost:8081
