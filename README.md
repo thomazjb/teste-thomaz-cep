@@ -61,7 +61,7 @@ Feita por Thomaz Juliann Boncompagni
    composer install
    ```
 
- 8. Copie o arquivo de ambiente de exemplo:
+8. Copie o arquivo de ambiente de exemplo:
 
    ```
    cp .env.example .env
