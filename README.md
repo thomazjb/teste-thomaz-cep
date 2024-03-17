@@ -7,7 +7,7 @@ Feita por Thomaz Juliann Boncompagni
 
 - **Laravel 11**: Framework PHP poderoso e elegante para o desenvolvimento de aplicativos web.
 - **Vue.js**: Biblioteca JavaScript progressiva para construir interfaces de usuário interativas.
-- **Sail**: Conjunto de scripts Docker para Laravel que facilita o gerenciamento de contêineres Docker para desenvolvimento local.
+- **Docker**: Conjunto de scripts Docker para Laravel que facilita o gerenciamento para desenvolvimento local.
 - **PostgreSQL**: Sistema de gerenciamento de banco de dados relacional de código aberto.
 - **pgAdmin**: Ferramenta de administração e desenvolvimento de banco de dados PostgreSQL.
 
@@ -25,27 +25,56 @@ Feita por Thomaz Juliann Boncompagni
    git clone https://github.com/seu-usuario/nome-do-repositorio.git
    ```
 
-2. Instale as dependências PHP com o Composer:
+2. Faça o build da aplicação:
+
+   ```
+   docker-compose build --no-cache
+   ```
+
+3. Levante o conteiner da aplicação:
+
+   ```
+   docker-compose up -d
+   ```
+   
+4. Entre no terminal da aplicação 
+
+   ```
+   docker-compose exec -it teste-thomaz-cep bash
+   ```
+   
+5. Configure os direitos de acesso do storage do laravel para o usuário atual:
+
+   ```
+   chown -R www-data:www-data storage
+   ```
+
+6. Instale as dependências PHP com o Composer:
 
    ```
    composer install
    ```
+7. Execute as migrações do banco de dados para criar as tabelas necessárias:
 
-3. Copie o arquivo de ambiente de exemplo:
+   ```
+   php artisan migrate
+   ```
+   
+8. Copie o arquivo de ambiente de exemplo:
 
    ```
    cp .env.example .env
    ```
 
-4. Configure seu ambiente no arquivo `.env`, especialmente as configurações do banco de dados PostgreSQL e Sail.
+9. Configure seu ambiente no arquivo `.env`, especialmente as configurações do banco de dados PostgreSQL 
 
-5. Inicie os contêineres Docker usando o Sail:
+9. Saia do conteiner
 
    ```
-   ./vendor/bin/sail up -d
+   exit
    ```
 
-6. Instale as dependências JavaScript com o npm ou yarn:
+6. Instale as dependências JavaScript com o npm ou yarn (para isso é necessário ter o npm instalado préviamente na máquina):
 
    ```
    npm install
@@ -57,16 +86,11 @@ Feita por Thomaz Juliann Boncompagni
    npm run dev
    ```
 
-8. Execute as migrações do banco de dados para criar as tabelas necessárias:
-
-   ```
-   ./vendor/bin/sail artisan migrate
-   ```
 
 9. Acesse a aplicação em seu navegador:
 
    ```
-   http://localhost
+   http://localhost:8081
    ```
 
 ## Licença
