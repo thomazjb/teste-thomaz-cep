@@ -22,7 +22,7 @@ Feita por Thomaz Juliann Boncompagni
 1. Clone este repositório:
 
    ```
-   git clone https://github.com/seu-usuario/nome-do-repositorio.git
+   git clone https://github.com/thomazjb/teste-thomaz-cep.git
    ```
 
 2. Faça o build da aplicação:
