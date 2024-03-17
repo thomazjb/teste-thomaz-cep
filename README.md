@@ -60,16 +60,17 @@ Feita por Thomaz Juliann Boncompagni
    ```
    composer install
    ```
-8. Execute as migrações do banco de dados para criar as tabelas necessárias:
 
-   ```
-   php artisan migrate
-   ```
-   
-9. Copie o arquivo de ambiente de exemplo:
+ 8. Copie o arquivo de ambiente de exemplo:
 
    ```
    cp .env.example .env
+   ```
+   
+9. Execute as migrações do banco de dados para criar as tabelas necessárias:
+
+   ```
+   php artisan migrate
    ```
 
 10. Configure seu ambiente no arquivo `.env`, especialmente as configurações do banco de dados PostgreSQL 
