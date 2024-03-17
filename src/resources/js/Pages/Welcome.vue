@@ -95,7 +95,7 @@ export default {
                                         sido encontrado, é possível cadastrá-lo no nosso banco de dados para busca
                                         posterior!
                                     </p>
-                                    <form @submit.prevent="submit">
+                                    <form @submit.prevent="form.get(route('cep.search'))">
                                         <div class="mt-6 flex gap-x-4 mx-20 justify-items-center">
                                             <label for="cep" class="sr-only">CEP</label>
                                             <input id="cep" name="cep" type="text" maxlength="9" autocomplete="cep"
