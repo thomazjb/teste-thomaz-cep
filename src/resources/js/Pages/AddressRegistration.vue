@@ -43,8 +43,11 @@ const form = useForm({
 
                     <div class="p-8 text-gray-900">
                         <div class="mx-auto max-w-2xl text-center">
-                            <h2 class="text-3xl font-bold tracking-tight text-red-500 sm:text-4xl">Cadastro de endereços</h2>
-                            <p class="mt-2 text-lg leading-8 text-gray-600">Insira corretamente as informações do endereço que deseja cadastrar.</p>
+                            <h2 class="text-3xl font-bold tracking-tight text-red-500 sm:text-4xl">Cadastro de endereços
+                            </h2>
+                            <p class="mt-2 text-lg leading-8 text-gray-600">Insira corretamente as informações do
+                                endereço que
+                                deseja cadastrar.</p>
                         </div>
                         <form @submit.prevent="form.patch(route('profile.update'))" class="m-8 space-y-6">
                             <div class="grid grid-cols-3 gap-4 gap-y-6 sm:grid-cols-3">

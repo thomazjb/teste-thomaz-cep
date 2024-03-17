@@ -1,49 +1,52 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import CepModal from '@/Components/CepModal.vue';
+import { ref, onMounted } from 'vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
+    canLogin: Boolean,
+    canRegister: Boolean,
+    data: Object,
 });
-
 
 const form = useForm({
     cep: '',
 });
 
+const showModal = ref(false);
+
 const submit = () => {
-    form.post(route('search'), {
-        onFinish: () => form.reset('cep'),
+    form.get(route('cep.search'), {
+        onSuccess: () => {
+            showModal.value = true;
+        },
+        onFinish: () =>{
+            openModal();
+        } 
     });
+
+    showModal.value = true;
+    localStorage.setItem('showModal', 'true');
 };
-</script>
 
-<script>
-
-export default {
-    data() {
-        return {
-            cep: ''
-        };
-    },
-    methods: {
-        formatCep() {
-            // Remove todos os caracteres não numéricos
-            let cep = this.cep.replace(/\D/g, '');
-
-            // Adiciona o traço se o CEP tiver mais de 5 caracteres
-            if (cep.length > 5) {
-                cep = cep.substring(0, 5) + '-' + cep.substring(5);
-            }
-
-            this.cep = cep;
-        }
+onMounted(() => {
+    const storedShowModal = localStorage.getItem('showModal');
+    if (storedShowModal === 'true') {
+        showModal.value = true;
     }
+});
+
+const openModal = () => {
+    showModal.value = true;
 };
+
+const formatCep = () => {
+    let cep = form.cep.replace(/\D/g, '');
+    cep = cep.replace(/^(\d{5})(\d{3})$/, '$1-$2');
+    form.cep = cep;
+};
+
 </script>
 
 <template>
@@ -67,13 +70,11 @@ export default {
                             class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]">
                         Dashboard
                         </Link>
-
                         <template v-else>
                             <Link :href="route('login')"
                                 class="rounded-md px-3 py-2 text-black font-bold ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]">
                             Entrar
                             </Link>
-
                             <Link v-if="canRegister" :href="route('register')"
                                 class="rounded-md px-3 py-2 text-black font-bold ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]">
                             Registrar
@@ -89,17 +90,17 @@ export default {
                                 <div class=" justify-center">
                                     <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl text-center">A
                                         busca de CEP mais
-                                        rápida do Oeste! 🤠</h2> <!-- Ajuste: text-center -->
+                                        rápida do Oeste! 🤠</h2>
                                     <p class="mt-4 text-lg leading-8 text-gray-300 text-center max-w-[40rem] ">Caso seu
                                         CEP não tenha
                                         sido encontrado, é possível cadastrá-lo no nosso banco de dados para busca
                                         posterior!
                                     </p>
-                                    <form @submit.prevent="form.get(route('cep.search'))">
+                                    <form @submit.prevent="submit">
                                         <div class="mt-6 flex gap-x-4 mx-20 justify-items-center">
                                             <label for="cep" class="sr-only">CEP</label>
                                             <input id="cep" name="cep" type="text" maxlength="9" autocomplete="cep"
-                                                v-model="cep" @input="formatCep"
+                                                v-model="form.cep" @input="formatCep"
                                                 class="min-w-0 flex-auto rounded-md border-0 bg-white/1 px-3.5 py-2 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-red-500 lg:text-lg lg:leading-8"
                                                 placeholder="00000-000">
                                             <button type="submit"
@@ -120,9 +121,12 @@ export default {
                 </main>
 
                 <footer>
-                    <p class="py-16 text-center text-sm text-black">Feito por Thomaz Juliann Boncompagni a propósitos de
+                    <p class="py-1 rounded-lg text-center text-2md opacity-70 mx-40 text-black bg-gray-300 mt-6">Feito
+                        por Thomaz
+                        Juliann Boncompagni a propósitos de
                         testes para a empresa Revenda Mais.</p>
                 </footer>
+                <CepModal v-if="showModal" :data="data" @close="showModal = false" />
             </div>
         </div>
     </div>
