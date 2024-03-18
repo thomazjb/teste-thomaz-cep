@@ -85,9 +85,9 @@ Feita por Thomaz Juliann Boncompagni.
 
 11. Saia do conteiner
 
-   ```
-   exit
-   ```
+       ```
+       exit
+       ```
 
 12. Instale as dependências JavaScript com o npm ou yarn (para isso é necessário ter o npm instalado préviamente na máquina):
 
