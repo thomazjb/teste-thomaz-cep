@@ -2,12 +2,14 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AddressModal from '@/Components/AddressModal.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import EditAddressModal from '@/Components/EditAddressModal.vue';
+import { Head, useForm, router, Link } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
-import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/solid'
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/solid';
 
 defineProps({
     addresses: Object,
+    address: Object,
 });
 
 const form = useForm({
@@ -21,24 +23,23 @@ const form = useForm({
 
 
 const showingAddressModal = ref(false);
-const selectedAddress = ref(null);
+const showingEditAddressModal = ref(false);
+const selectedEditAddress = ref(null);
 
 const showAddressModal = () => {
     showingAddressModal.value = true;
 }
 
 const openEditModal = (address) => {
-    selectedAddress.value = address;
-    showAddressModal();
+    selectedEditAddress.value = address;
+    showingEditAddressModal.value = true;
 }
 
-const deleteAddress = (address) => {
-    form.delete(route('address.destroy', address), {
-        onFinish: () => {
-           
-        }
-    });
-};
+function deleteAddress(address) {
+    router.delete(`/dashboard/${address.id}`, {
+  onBefore: () => confirm('Are you sure you want to delete this user?'),
+})
+}
 </script>
 
 
@@ -50,7 +51,8 @@ const deleteAddress = (address) => {
         </template>
 
         <div class="py-12">
-            <AddressModal v-if="showingAddressModal" :address="selectedAddress" @close="showingAddressModal = false" />
+            <AddressModal v-if="showingAddressModal" @close="showingAddressModal = false" />
+            <EditAddressModal v-if="showingEditAddressModal" :address="selectedEditAddress" @close="showingEditAddressModal = false" />
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <PrimaryButton @click="showAddressModal" class="my-4">Adicionar Endereço</PrimaryButton>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-white">
@@ -100,9 +102,9 @@ const deleteAddress = (address) => {
                                             <PencilSquareIcon class="h-6 w-6 text-red-500 m-1" />
                                         </a>
                                         <div class="w-4"></div>
-                                        <a href="#" @click="deleteAddress(address)" class="font-medium text-blue-600 hover:underline">
+                                        <Link @click.prevent="deleteAddress(address)" method="DELETE" class="font-medium text-blue-600 hover:underline">
                                             <TrashIcon class="h-6 w-6 text-red-500 m-1" />
-                                        </a>
+                                        </Link>
                                     </div>
                                 </td>
                             </tr>

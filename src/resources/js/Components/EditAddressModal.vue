@@ -1,13 +1,18 @@
 <script setup>
+import { ref, onMounted, defineProps, defineEmits } from 'vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-
 import Select from '@/Components/Select.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
+
+const props = defineProps({
+    address: Object,
+});
 
 const form = useForm({
+    id: '',
     street: '',
     number: '',
     complement: '',
@@ -16,13 +21,32 @@ const form = useForm({
     cep: '',
 });
 
+const emit = defineEmits(['close']);
+
+onMounted(() => {
+    // Preencher os campos do formulário com os valores do endereço
+    if (props.address) {
+        form.id = props.address.id || '';
+        form.street = props.address.street || '';
+        form.number = props.address.number || '';
+        form.complement = props.address.complement || '';
+        form.city = props.address.city || '';
+        form.state = props.address.state || '';
+        form.cep = props.address.cep || '';
+    }
+});
+
 const submit = () => {
-    form.post(route('address.store'), {
+    form.post(route('address.edit'), {
         onFinish: () => {
             form.reset();
-            this.$emit('close');
+            closeModal();
         }
     });
+};
+
+const closeModal = () => {
+    emit('close');
 };
 </script>
 
@@ -35,11 +59,10 @@ const submit = () => {
 
                     <div class="p-8 text-gray-900">
                         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8 text-center">
-                            <h2 class="text-3xl font-bold tracking-tight text-red-500 sm:text-4xl">Cadastro de endereços
+                            <h2 class="text-3xl font-bold tracking-tight text-red-500 sm:text-4xl">Edição de endereços
                             </h2>
-                            <p class="mt-2 text-lg leading-8 text-gray-600">Insira corretamente as informações do
-                                endereço que
-                                deseja cadastrar.</p>
+                            <p class="mt-2 text-lg leading-8 text-gray-600">Se você precisa mudar algo, é só alterar as
+                                infos abaixo!</p>
                         </div>
                         <form @submit.prevent="submit" class="m-8 space-y-6">
                             <div class="grid grid-cols-3 gap-4 gap-y-6 sm:grid-cols-3">
@@ -47,13 +70,13 @@ const submit = () => {
                                 <div class="col-span-2">
                                     <InputLabel for="street" value="Rua" />
                                     <TextInput id="street" type="text" class="mt-1 w-full" v-model="form.street"
-                                        required autofocus autocomplete="street" />
+                                        autofocus autocomplete="street" />
                                     <InputError class="mt-2" :message="form.errors.street" />
                                 </div>
                                 <div>
                                     <InputLabel for="number" value="Número" />
                                     <TextInput id="number" type="text" class="mt-1 w-full" v-model="form.number"
-                                        required autocomplete="number" />
+                                        autocomplete="number" />
                                     <InputError class="mt-2" :message="form.errors.number" />
                                 </div>
                             </div>
@@ -63,19 +86,19 @@ const submit = () => {
                                 <div>
                                     <InputLabel for="complement" value="Complemento" />
                                     <TextInput id="complement" type="text" class="mt-1 w-full" v-model="form.complement"
-                                        required autofocus autocomplete="complement" />
+                                        autofocus autocomplete="complement" />
                                     <InputError class="mt-2" :message="form.errors.complement" />
                                 </div>
                                 <div class="col-span-2">
                                     <InputLabel for="city" value="Cidade" />
-                                    <TextInput id="city" type="text" class="mt-1 w-full" v-model="form.city" required
+                                    <TextInput id="city" type="text" class="mt-1 w-full" v-model="form.city"
                                         autocomplete="city" />
                                     <InputError class="mt-2" :message="form.errors.city" />
                                 </div>
 
                                 <div>
                                     <InputLabel for="state" value="Estado" />
-                                    <Select id="state" v-model="form.state">
+                                    <Select id="state" v-model="form.state" @change="onChange">
                                         <template #content>
                                             <option value="PR">Paraná</option>
                                             <option value="AC">Acre</option>
@@ -113,14 +136,16 @@ const submit = () => {
                             <div class="flex justify-between">
 
                                 <div>
-                                    <PrimaryButton class="bg-gray-400" @click="closeModal">Sair</PrimaryButton>
+                                    <a class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                                         @click="closeModal">Sair</a>
                                 </div>
                                 <div>
-                                    <PrimaryButton class="bg-blue-400 hover:bg-blue-300" :disabled="form.processing">Salvar</PrimaryButton>
+                                    <PrimaryButton class="bg-blue-400 hover:bg-blue-300" :disabled="form.processing">
+                                        Salvar</PrimaryButton>
                                 </div>
                                 <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                                     leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
-                                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Salvo.</p>
+                                    <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Atualizado.</p>
                                 </Transition>
                             </div>
                         </form>
@@ -135,11 +160,11 @@ const submit = () => {
 <script>
 export default {
     props: {
-
+        address: Object
     },
     methods: {
         closeModal() {
-            this.$emit('close');
+            emit('close');
         }
     }
 };
