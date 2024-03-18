@@ -2,6 +2,8 @@
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import CepModal from '@/Components/CepModal.vue';
 import { ref, onMounted } from 'vue';
+import InputError from '@/Components/InputError.vue';
+import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 defineProps({
@@ -21,9 +23,9 @@ const submit = () => {
         onSuccess: () => {
             showModal.value = true;
         },
-        onFinish: () =>{
+        onFinish: () => {
             openModal();
-        } 
+        }
     });
 
     showModal.value = true;
@@ -99,12 +101,19 @@ const formatCep = () => {
                                     <form @submit.prevent="submit">
                                         <div class="mt-6 flex gap-x-4 mx-20 justify-items-center">
                                             <label for="cep" class="sr-only">CEP</label>
-                                            <input id="cep" name="cep" type="text" maxlength="9" autocomplete="cep"
-                                                v-model="form.cep" @input="formatCep"
-                                                class="min-w-0 flex-auto rounded-md border-0 bg-white/1 px-3.5 py-2 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-red-500 lg:text-lg lg:leading-8"
-                                                placeholder="00000-000">
-                                            <button type="submit"
-                                                class="flex-none rounded-md bg-red-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Buscar</button>
+                                            <TextInput
+                                            id="cep"
+                                            name="cep"
+                                            type="text"
+                                            maxlength="9" 
+                                            autocomplete="cep"
+                                            v-model="form.cep" 
+                                            @input="formatCep"
+                                            class="min-w-0 flex-auto rounded-md border-0 bg-white/1 px-3.5 py-2 text-black shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-red-500 lg:text-lg lg:leading-8"
+                                            placeholder="00000-000" />
+                                            <InputError class="mt-2" :message="form.errors.cep" />
+                                            <PrimaryButton type="submit" :disabled="!form.cep.trim()"
+                                                class="flex-none rounded-md bg-red-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Buscar</PrimaryButton>
                                         </div>
                                     </form>
 

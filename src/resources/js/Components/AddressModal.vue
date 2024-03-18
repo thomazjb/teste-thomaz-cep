@@ -1,55 +1,46 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+
 import Select from '@/Components/Select.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
 
-defineProps({
-    mustVerifyEmail: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
-
-const user = usePage().props.auth.user;
-
 const form = useForm({
-    name: user.name,
-    email: user.email,
+    street: '',
+    number: '',
+    complement: '',
+    city: '',
+    state: '',
+    cep: '',
 });
+
+const submit = () => {
+    form.post(route('address.store'), {
+        onFinish: () => {
+            form.reset()
+        }
+    });
+};
 </script>
 
-
 <template>
-
-    <Head title="Cadastro de Endereços" />
-
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Cadastro de Endereços</h2>
-        </template>
-
-        <div class="py-20">
-
-            <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-
+    <div class="modal fixed inset-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+        <div class="modal-container bg-white w-full md:max-w-3xl mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <div class="modal-content py-4 text-left px-6">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                     <div class="p-8 text-gray-900">
-                        <div class="mx-auto max-w-2xl text-center">
+                        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8 text-center">
                             <h2 class="text-3xl font-bold tracking-tight text-red-500 sm:text-4xl">Cadastro de endereços
                             </h2>
                             <p class="mt-2 text-lg leading-8 text-gray-600">Insira corretamente as informações do
                                 endereço que
                                 deseja cadastrar.</p>
                         </div>
-                        <form @submit.prevent="form.patch(route('profile.update'))" class="m-8 space-y-6">
+                        <form @submit.prevent="submit" class="m-8 space-y-6">
                             <div class="grid grid-cols-3 gap-4 gap-y-6 sm:grid-cols-3">
 
                                 <div class="col-span-2">
@@ -82,10 +73,10 @@ const form = useForm({
                                 </div>
 
                                 <div>
-                                    <InputLabel for="city" value="Estado" />
-                                    <Select id="state">
+                                    <InputLabel for="state" value="Estado" />
+                                    <Select id="state" v-model="form.state">
                                         <template #content>
-                                            <option value="PR" selected>Paraná</option>
+                                            <option value="PR">Paraná</option>
                                             <option value="AC">Acre</option>
                                             <option value="AL">Alagoas</option>
                                             <option value="AP">Amapá</option>
@@ -114,14 +105,18 @@ const form = useForm({
                                             <option value="TO">Tocantins</option>
                                         </template>
                                     </Select>
-                                    <InputError class="mt-2" :message="form.errors.city" />
-
-
+                                    <InputError class="mt-2" :message="form.errors.state" />
 
                                 </div>
                             </div>
-                            <div class="flex items-center gap-4 justify-end">
-                                <PrimaryButton :disabled="form.processing">Salvar</PrimaryButton>
+                            <div class="flex justify-between">
+
+                                <div>
+                                    <PrimaryButton class="bg-gray-400" @click="closeModal">Sair</PrimaryButton>
+                                </div>
+                                <div>
+                                    <PrimaryButton class="bg-blue-400 hover:bg-blue-300" :disabled="form.processing">Salvar</PrimaryButton>
+                                </div>
                                 <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                                     leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
                                     <p v-if="form.recentlySuccessful" class="text-sm text-gray-600">Salvo.</p>
@@ -129,11 +124,22 @@ const form = useForm({
                             </div>
                         </form>
 
-
-
                     </div>
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+    </div>
 </template>
+
+<script>
+export default {
+    props: {
+
+    },
+    methods: {
+        closeModal() {
+            this.$emit('close');
+        }
+    }
+};
+</script>

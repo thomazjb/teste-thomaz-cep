@@ -26,10 +26,6 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
                         <p class="text-lg">{{ data.uf }}</p>
                     </div>
 
-
-
-                    <!-- Outros campos do formulário podem ser adicionados aqui -->
-
                     <div class="flex items-center gap-4 justify-end mt-6">
                         <div class="flex justify-end">
                             <PrimaryButton @click="closeModal">Sair</PrimaryButton>

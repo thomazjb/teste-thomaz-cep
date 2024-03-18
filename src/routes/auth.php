@@ -10,9 +10,13 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Address\SearchCepController;
+use App\Http\Controllers\Address\AddressController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+    Route::get('search', [SearchCepController::class, 'search'])
+                ->name('cep.search');
+
     Route::get('search', [SearchCepController::class, 'search'])
                 ->name('cep.search');
 
@@ -40,6 +44,10 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+
+    Route::post('createAddress', [AddressController::class, 'store'])
+                ->name('address.store');
+
     Route::get('verify-email', EmailVerificationPromptController::class)
                 ->name('verification.notice');
 
