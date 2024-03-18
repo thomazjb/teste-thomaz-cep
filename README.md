@@ -1,12 +1,13 @@
 # Aplicação de Busca de CEP com Laravel 11 e Vue.js 
 
 A aplicação tem como utilidade a validação de conhecimentos técnicos para a vaga de Desenvolvedor Full Stack Pleno na empresa Revenda Mais.
-Feita por Thomaz Juliann Boncompagni
+Feita por Thomaz Juliann Boncompagni.
 
 ## Tecnologias Utilizadas
 
 - **Laravel 11**: Framework PHP poderoso e elegante para o desenvolvimento de aplicativos web.
 - **Vue.js**: Biblioteca JavaScript progressiva para construir interfaces de usuário interativas.
+- **Inertia.js**: Biblioteca que permite o gerenciamento de monolitos, agilizando a recuperação e gerenciamento de dados entre Back e Front.
 - **Docker**: Conjunto de scripts Docker para Laravel que facilita o gerenciamento para desenvolvimento local.
 - **PostgreSQL**: Sistema de gerenciamento de banco de dados relacional de código aberto.
 - **pgAdmin**: Ferramenta de administração e desenvolvimento de banco de dados PostgreSQL.
@@ -14,7 +15,7 @@ Feita por Thomaz Juliann Boncompagni
 ## Funcionalidades
 
 - **Busca de CEP**: Os usuários podem pesquisar CEPs e visualizar suas informações.
-- **Cadastro de CEP**: Os usuários autenticados têm a possibilidade de cadastrar um novo CEP caso não seja encontrado na busca.
+- **CRUD de Endereços**: Os usuários autenticados têm a possibilidade de cadastrar um novo endereço.
 - **Painel de Login**: Acesso restrito apenas para usuários autenticados.
 
 ## Como Executar Localmente
