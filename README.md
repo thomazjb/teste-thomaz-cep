@@ -91,21 +91,21 @@ Feita por Thomaz Juliann Boncompagni.
 
 12. Instale as dependências JavaScript com o npm ou yarn (para isso é necessário ter o npm instalado préviamente na máquina):
 
-   ```
-   cd src && npm install
-   ```
+       ```
+       cd src && npm install
+       ```
 
 13. Compile os ativos do Vue.js:
 
-   ```
-   npm run dev
-   ```
+       ```
+       npm run dev
+       ```
 
 14. Acesse a aplicação em seu navegador:
 
-   ```
-   http://localhost:8081
-   ```
+       ```
+       http://localhost:8081
+       ```
 
 ## Licença
 
