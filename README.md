@@ -7,6 +7,7 @@ Feita por Thomaz Juliann Boncompagni.
 
 - **Laravel 11**: Framework PHP poderoso e elegante para o desenvolvimento de aplicativos web.
 - **Vue.js**: Biblioteca JavaScript progressiva para construir interfaces de usuário interativas.
+- **Vite**: Ferramenta de gerenciamento de servidores front-end. Otima ferramenta para compilação rápida quando uma mudança é feita na página.
 - **Inertia.js**: Biblioteca que permite o gerenciamento de monolitos, agilizando a recuperação e gerenciamento de dados entre Back e Front.
 - **Docker**: Conjunto de scripts Docker para Laravel que facilita o gerenciamento para desenvolvimento local.
 - **PostgreSQL**: Sistema de gerenciamento de banco de dados relacional de código aberto.
