@@ -3,6 +3,12 @@
 A aplicação tem como utilidade a validação de conhecimentos técnicos para a vaga de Desenvolvedor Full Stack Pleno na empresa Revenda Mais.
 Feita por Thomaz Juliann Boncompagni.
 
+## Avisos importantes
+
+- A aplicação foi desenvolvida utilizando o docker, utilizando o ubuntu 22 e wsl2 em cima do windows.
+- É importante que você possua node e npm instalados na maquina virtual para facilitar o gerenciamento da aplicação.
+- Caso haja algum bug ou erro no build me contate através de thomaz.jb@hotmail.com
+
 ## Tecnologias Utilizadas
 
 - **Laravel 11**: Framework PHP poderoso e elegante para o desenvolvimento de aplicativos web.
